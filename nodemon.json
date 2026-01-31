@@ -1,0 +1,12 @@
+{
+    "watch": [
+        "index.js",
+        "ai.js",
+        "commands/"
+    ],
+    "ext": "js,json",
+    "ignore": [
+        "node_modules/"
+    ],
+    "exec": "node index.js"
+}
