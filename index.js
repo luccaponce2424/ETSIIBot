@@ -3,6 +3,7 @@ import path from "path";
 import { Client, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
 import { getBotResponse } from "./ai.js";
+import express from 'express';
 
 dotenv.config();
 export let botStatus = "Desconectado ❌";
@@ -15,6 +16,17 @@ const client = new Client({
     ],
 });
 
+// Página web para mantener el bot activo
+const app = express();
+const PORT = process.env.PORT || 3000;
+app.get("/", (req, res) => {
+  res.send("Bot activo en local 🚀");
+});
+
+app.listen(PORT, () => {
+  console.log(`Servidor web escuchando en http://localhost:${PORT}`);
+});
+// Fin página web
 
 client.once("clientReady", () => {
     botStatus = "Conectado ✅";
