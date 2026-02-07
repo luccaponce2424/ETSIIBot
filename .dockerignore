@@ -12,3 +12,15 @@ build/
 .git/
 .gitignore
 README.md
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.cache/
+.npm/
+coverage/
+DOCKER.md
+docker-compose.yml
+Dockerfile
+render.yaml
