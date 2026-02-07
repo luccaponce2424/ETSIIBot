@@ -1,0 +1,28 @@
+services:
+  etsiibot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: etsiibot
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # Configuración de Chrome/Chromium para Puppeteer en Docker
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
+    # Recursos límites (opcional, ajusta según tu servidor)
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
