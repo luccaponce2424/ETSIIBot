@@ -13,7 +13,7 @@ async function getRiverLevel() {
         }
         // Lanzar navegador
         browser = await puppeteer.launch({
-            executablePath: "/usr/bin/chromium-browser",
+            executablePath: "/usr/bin/chromium",
             headless: "new",
             args: [
                 "--no-sandbox",
