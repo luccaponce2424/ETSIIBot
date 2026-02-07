@@ -1,12 +1,25 @@
 import puppeteer from "puppeteer";
+import fs from "fs";
 
 async function getRiverLevel() {
     let browser;
     try {
+        try {
+            const files = fs.readdirSync("/usr/bin");
+            console.log("BINARIOS EN /usr/bin:");
+            console.log(files.filter(f => f.includes("chrome") || f.includes("chrom")))
+        } catch (e) {
+            console.error("No pude leer /usr/bin", e);
+        }
         // Lanzar navegador
         browser = await puppeteer.launch({
-            headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            executablePath: "/usr/bin/chromium-browser",
+            headless: "new",
+            args: [
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage"
+            ]
         });
 
         const page = await browser.newPage();
