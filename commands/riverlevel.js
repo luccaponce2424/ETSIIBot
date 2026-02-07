@@ -212,12 +212,25 @@ export default {
     description: "Informa del nivel del río y estado de los embalses en tiempo real.",
     async execute(message) {
         try {
+            // Mostrar indicador de "está escribiendo"
             await message.channel.sendTyping();
             
-            const riverData = await getRiverLevel();
-            const emoji = getEmojiByColor(riverData.style);
-
-            const reservoirData = await getReservoirLevel();
+            // Crear una promesa que refresca el typing cada 5 segundos
+            const typingInterval = setInterval(() => {
+                message.channel.sendTyping().catch(() => {});
+            }, 5000);
+            
+            try {
+                // Ejecutar getRiverLevel y getReservoirLevel en paralelo
+                const [riverData, reservoirData] = await Promise.all([
+                    getRiverLevel(),
+                    getReservoirLevel()
+                ]);
+                
+                // Detener el intervalo de typing
+                clearInterval(typingInterval);
+                
+                const emoji = getEmojiByColor(riverData.style);
             
             if (!riverData.text || riverData.text === "No data") {
                 message.channel.send("❌ No se encontraron datos de nivel del río.");
@@ -242,7 +255,11 @@ ${embalseSection}
 **Fuente:** https://www.chguadalquivir.es/saih/`.trim();
             
             message.channel.send(result);
-            
+            } catch (error) {
+                clearInterval(typingInterval);
+                console.error(error);
+                message.channel.send("❌ No pude obtener el nivel del río. Intenta más tarde.");
+            }
         } catch (error) {
             console.error(error);
             message.channel.send("❌ No pude obtener el nivel del río. Intenta más tarde.");
