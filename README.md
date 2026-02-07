@@ -12,6 +12,7 @@ Un **chatbot** para **Discord** que asiste a los alumnos de la ETSII con humor y
 | ping | Mide tiempo de respuesta generando un mensaje con IA |
 | reset | Resetea la memoria del bot para el usuario que envía el comando |
 | tokens | Muestra información sobre el uso de tokens de Cohere |
+| riverlevel | Informa del nivel del río y estado de los embalses en tiempo real |
 
 ## Instalación
 
